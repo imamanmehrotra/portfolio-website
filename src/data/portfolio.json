@@ -1,0 +1,178 @@
+{
+  "personal_info": {
+    "name": "Aman Mehrotra",
+    "title": "ML | Data Science| MLOps | GenAI | Agentic AI | Azure 2X Certified",
+    "tagline": "Transforming Business Challenges into Scalable AI Solutions",
+    "summary": "I am a seasoned Data Scientist and an AI Engineer, currently leading AI initiatives at PepsiCo as a Senior Manager. \nPrior joining PepsiCo, I have worked with 5 other organizations, starting my career in 2017 with ZS Associates as Business Technology Analyst.\nYour expertise spans AI adoption strategy, generative AI solution architecture, and end-to-end development of intelligent applications across domains. You excel at translating complex business challenges into scalable AI solutions, driving innovation, and fostering team productivity through emerging AI tools.\nMy native place is Moradabad, India but I have moved to Bangalore in 2022 due to workjob\nI love all foods, particularly Indian food and my all time favourite is Choley Bhaturey with Kulhad Lassi.\nI am married and my wife is a biotechnological engineer by profession. \nMy parents live at my native place and they have their own business.\nI am state level Table Tennis player and my interests are particularly playing Tabla, attending tech seminars, adventure sports and running.",
+    "location": "Bangalore, Karnataka, India",
+    "email": "amansammehrotra@gmail.com",
+    "phone": "8126357886",
+    "linkedin": "https://www.linkedin.com/in/aman-mehrotra-dataislife",
+    "interests": [
+      "Playing Tabla",
+      "Attending Tech Seminars",
+      "Adventure Sports",
+      "Running",
+      "Table Tennis (State Level Player)"
+    ],
+    "favorite_food": "Choley Bhaturey with Kulhad Lassi",
+    "family": {
+      "wife": "Biotechnological Engineer",
+      "parents": "Own Business in Moradabad, India"
+    }
+  },
+  "skills": {
+    "technical": [
+      "Machine Learning",
+      "Deep Learning",
+      "GenAI",
+      "NLP/LLMs",
+      "Data Warehousing",
+      "Predictive Analytics",
+      "Statistical Modeling",
+      "Data Pipelining",
+      "MLOps",
+      "CICD",
+      "BI Reporting",
+      "Dashboarding"
+    ],
+    "tools": [
+      "Python",
+      "PySpark",
+      "SQL",
+      "PLSQL",
+      "Java",
+      "TensorFlow",
+      "AWS",
+      "GCP",
+      "Azure",
+      "Databricks",
+      "Airflow",
+      "Power BI",
+      "Tableau",
+      "Git",
+      "JIRA",
+      "Alteryx",
+      "Excel"
+    ],
+    "domains": [
+      "Healthcare Analytics",
+      "Financial Services",
+      "Retail Analytics",
+      "Banking",
+      "Commercial Operations",
+      "Salesforce Optimization"
+    ]
+  },
+  "certifications": [
+    "Azure 2X Certified",
+    "AWS Cloud Primer",
+    "Lean Six Sigma Green Belt",
+    "AMCAT Certified Business Analyst",
+    "AMCAT Certified Corporate Communications Professional"
+  ],
+  "experience": [
+    {
+      "company": "PepsiCo",
+      "role": "Senior Manager - Data Science",
+      "duration": "2022 - Present",
+      "location": "Bangalore, India",
+      "description": [
+        "Developing an enterprise-grade Agentic AI solution designed to seamlessly integrate with ticketing platforms such as ServiceNow. The solution accelerates incident resolution by assisting human agents in identifying and implementing fixes more efficiently, while reducing reliance on manual intervention for Priority L1 and L2 queries. It also automatically summarizes conversations and comments, ensuring that when cases escalate to specialized teams, they receive a clear, concise context for faster resolution.",
+        "Responsible for driving AI adoption across development teams.",
+        "Providing technical guidance for AI/ML project implementation, ensuring alignment with business needs.",
+        "Championing best practices in AI engineering, governance, and scalability across teams."
+      ]
+    },
+    {
+      "company": "State Street",
+      "role": "Manager - AI/ML",
+      "duration": "September 2024 - Present (1 year)",
+      "location": "Bengaluru, Karnataka, India",
+      "description": [
+        "Working on Fintech use-cases based on applied AI research",
+        "Data extraction from financial documents using deep learning models",
+        "Developed Text2Chart based GenAI tool for NER and SQL generation",
+        "Tech Stack: Python (ML, DL, GenAI), AWS, LLM Models (Llama, Mistral, GPT-4o, Gemma)"
+      ]
+    },
+    {
+      "company": "Microsoft",
+      "role": "Senior Data Scientist",
+      "duration": "November 2023 - September 2024 (11 months)",
+      "location": "Bangalore Urban, Karnataka, India",
+      "description": [
+        "Working with Microsoft CMF team for Azure AI and OpenAI chatbot solutions",
+        "Azure Search, Indexing, RAG based solutioning",
+        "LLM configuration and cognitive services integration"
+      ]
+    },
+    {
+      "company": "Walmart Global Tech India",
+      "role": "Senior Data Analyst - Data Science",
+      "duration": "April 2023 - November 2023 (8 months)",
+      "location": "Bengaluru, Karnataka, India",
+      "description": [
+        "Built self-service text classification NLP library",
+        "Developed automated EDA framework for data science teams",
+        "App Adoption/Web Adoption Analytics with PySpark and Airflow",
+        "MLOps dashboard for monitoring 100+ ML models",
+        "Food waste pipeline using Pyspark, GBQ, GCP Dataproc"
+      ]
+    },
+    {
+      "company": "Genpact",
+      "role": "Senior Data Science Engineer",
+      "duration": "July 2021 - January 2022 (7 months)",
+      "location": "Bangalore Urban, Karnataka, India",
+      "description": [
+        "Healthcare Analytics focusing on Data Engineering and Analysis",
+        "Tech Stack: AWS, Alteryx, Scala, Spark, Python, SQL, ML"
+      ]
+    },
+    {
+      "company": "EXL",
+      "role": "Assistant Manager - Data Engineering",
+      "duration": "October 2020 - July 2021 (10 months)",
+      "location": "Noida, Uttar Pradesh, India",
+      "description": [
+        "Developed End to End Data Flow Pipeline using Apache Spark",
+        "Financial Data transformation and ingestion into MicroStrategy",
+        "Python Jupyter Notebooks for automated ETL operations"
+      ]
+    },
+    {
+      "company": "ZS Associates",
+      "role": "Associate Consultant - Reporting Developer",
+      "duration": "February 2019 - October 2020 (1 year 9 months)",
+      "location": "Gurugram, Haryana, India",
+      "description": [
+        "MicroStrategy Developer leading ETL architect activities",
+        "Led Tableau Reporting work-stream development",
+        "Automated data cleaning using Python Pandas & NumPy"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Liverpool John Moores University",
+      "degree": "Master's degree, Data Science · (November 2022 - August 2024)"
+    },
+    {
+      "institution": "International Institute of Information Technology Bangalore",
+      "degree": "Postgraduate Degree, Data science · (2022 - 2023)"
+    },
+    {
+      "institution": "KIET Group of Institutions",
+      "degree": "Bachelor of Technology (B.Tech.), Information Technology · (2013 - 2017)"
+    }
+  ],
+  "achievements": [
+    "Led AI initiatives across 65+ international markets",
+    "Developed Text2Chart GenAI tool for financial document analysis",
+    "Built automated EDA framework for data science teams",
+    "Implemented MLOps monitoring for 100+ ML models",
+    "State level Table Tennis player"
+  ],
+  "last_updated": "2025-08-10T20:14:08.205449"
+} 
