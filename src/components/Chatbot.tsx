@@ -2,23 +2,30 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChatBubbleLeftRightIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { 
+  ChatBubbleLeftRightIcon, 
+  XMarkIcon, 
+  PaperAirplaneIcon,
+  InformationCircleIcon
+} from '@heroicons/react/24/outline';
 import { ChatMessage } from '@/types/portfolio';
 import { useTheme } from '../contexts/ThemeContext';
 
 export default function Chatbot() {
   const { theme } = useTheme();
+  
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I&apos;m Aman&apos;s AI assistant. I can help you learn more about his experience, skills, projects, and background. What would you like to know?",
+      content: "Hi! I'm Aman Mehrotra, and I'm excited to chat with you! I can share insights about my journey in data science and AI, my experiences across different companies, my technical skills, personal interests, and much more. What would you like to know about me?",
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [providerInfo, setProviderInfo] = useState<{provider: string, model: string} | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,6 +43,25 @@ export default function Chatbot() {
     }
   }, [isOpen]);
 
+  // Load provider info when component mounts
+  useEffect(() => {
+    const loadProviderInfo = async () => {
+      try {
+        const response = await fetch('/api/config');
+        const data = await response.json();
+        if (data.isConfigured) {
+          setProviderInfo({
+            provider: data.currentProvider,
+            model: data.currentModel
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load provider info:', error);
+      }
+    };
+    loadProviderInfo();
+  }, []);
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -47,61 +73,66 @@ export default function Chatbot() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputValue;
     setInputValue('');
     setIsLoading(true);
 
-    // Simulate AI response based on user input
-    setTimeout(() => {
-      const response = generateAIResponse(inputValue);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: currentInput
+        }),
+      });
+
+      const data = await response.json();
+      
+      // Update provider info if available
+      if (data.provider && data.model) {
+        setProviderInfo({
+          provider: data.provider,
+          model: data.model
+        });
+      }
+      
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response,
+        content: data.response || "I'm sorry, I couldn't generate a response at the moment.",
         timestamp: new Date()
       };
+      
       setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "I'm experiencing some technical difficulties. Please try again in a moment.",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
-  };
-
-  const generateAIResponse = (userInput: string): string => {
-    const input = userInput.toLowerCase();
-    
-    if (input.includes('experience') || input.includes('work') || input.includes('job')) {
-      return "Aman has extensive experience across multiple organizations. He&apos;s currently a Senior Manager at PepsiCo leading AI initiatives. Previously, he worked at State Street as Manager - AI/ML, Microsoft as Senior Data Scientist, Walmart Global Tech, Genpact, EXL, and started his career at ZS Associates in 2017. He specializes in AI adoption strategy, GenAI solutions, and has led initiatives across 65+ international markets.";
     }
-    
-    if (input.includes('skill') || input.includes('technology') || input.includes('tech')) {
-      return "Aman&apos;s technical skills include Machine Learning, Deep Learning, GenAI, NLP/LLMs, Data Warehousing, and MLOps. His tool expertise covers Python, PySpark, SQL, TensorFlow, AWS, GCP, Azure, Databricks, Airflow, Power BI, and Tableau. He has domain experience in Healthcare Analytics, Financial Services, Retail Analytics, and Banking.";
-    }
-    
-    if (input.includes('education') || input.includes('degree') || input.includes('university')) {
-      return "Aman holds a Master&apos;s degree in Data Science from Liverpool John Moores University (2022-2024), a Postgraduate Degree in Data Science from IIIT Bangalore (2022-2023), and a B.Tech in Information Technology from KIET Group of Institutions (2013-2017).";
-    }
-    
-    if (input.includes('certification') || input.includes('certified')) {
-      return "Aman is Azure 2X Certified, has AWS Cloud Primer certification, Lean Six Sigma Green Belt, AMCAT Certified Business Analyst, and AMCAT Certified Corporate Communications Professional.";
-    }
-    
-    if (input.includes('project') || input.includes('achievement') || input.includes('accomplishment')) {
-      return "Key achievements include developing Text2Chart GenAI tool for financial document analysis, building automated EDA framework for data science teams, implementing MLOps monitoring for 100+ ML models, and leading AI initiatives across 65+ international markets. He&apos;s also a state-level Table Tennis player!";
-    }
-    
-    if (input.includes('personal') || input.includes('hobby') || input.includes('interest')) {
-      return "Aman is from Moradabad, India, and moved to Bangalore in 2022. He's married to a biotechnological engineer. His interests include playing Tabla, attending tech seminars, adventure sports, running, and he's a state-level Table Tennis player. His favorite food is Choley Bhaturey with Kulhad Lassi!";
-    }
-    
-    if (input.includes('contact') || input.includes('email') || input.includes('linkedin')) {
-      return "You can reach Aman at amansammehrotra@gmail.com or connect with him on LinkedIn at www.linkedin.com/in/aman-mehrotra-dataislife. He's currently based in Bangalore, Karnataka, India.";
-    }
-    
-          return "I&apos;d be happy to help! You can ask me about Aman&apos;s experience, skills, education, projects, achievements, or personal background. What specific information are you looking for?";
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const getProviderDisplayName = (provider: string) => {
+    switch (provider) {
+      case 'openai': return 'OpenAI';
+      case 'groq': return 'Groq';
+      case 'ollama': return 'Ollama';
+      default: return provider;
     }
   };
 
@@ -134,7 +165,7 @@ export default function Chatbot() {
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 50 }}
-              className={`w-full max-w-md h-96 rounded-2xl shadow-2xl flex flex-col ${
+              className={`w-full max-w-md h-[32rem] rounded-2xl shadow-2xl flex flex-col ${
                 theme === 'dark' 
                   ? 'bg-slate-900 border border-slate-700' 
                   : 'bg-[#faf8f0] border border-[#d2b48c]'
@@ -151,26 +182,55 @@ export default function Chatbot() {
                   <div>
                     <h3 className={`font-semibold ${
                       theme === 'dark' ? 'text-white' : 'text-[#2d2d2d]'
-                    }`}>Aman&apos;s AI Assistant</h3>
+                    }`}>Chat with Aman</h3>
                     <p className={`text-xs ${
                       theme === 'dark' ? 'text-white/60' : 'text-[#6b7280]'
-                    }`}>Ask me anything!</p>
+                    }`}>
+                      {providerInfo 
+                        ? `Powered by ${getProviderDisplayName(providerInfo.provider)}`
+                        : 'AI-powered assistant'
+                      }
+                    </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className={`p-2 rounded-lg transition-colors ${
-                    theme === 'dark' 
-                      ? 'text-white/60 hover:text-white hover:bg-white/10' 
-                      : 'text-[#6b7280] hover:text-[#2d2d2d] hover:bg-[#e8f5e8]'
-                  }`}
-                >
-                  <XMarkIcon className="w-5 h-5" />
-                </button>
+                <div className="flex items-center space-x-2">
+                  {providerInfo && (
+                    <div className="group relative">
+                      <button
+                        className={`p-2 rounded-lg transition-colors ${
+                          theme === 'dark' 
+                            ? 'text-white/60 hover:text-white hover:bg-white/10' 
+                            : 'text-[#6b7280] hover:text-[#2d2d2d] hover:bg-[#e8f5e8]'
+                        }`}
+                        title="AI Provider Info"
+                      >
+                        <InformationCircleIcon className="w-4 h-4" />
+                      </button>
+                      <div className={`absolute right-0 top-10 w-48 p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${
+                        theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-white text-gray-800'
+                      }`}>
+                        <p className="text-xs">
+                          <strong>Provider:</strong> {getProviderDisplayName(providerInfo.provider)}<br/>
+                          <strong>Model:</strong> {providerInfo.model}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className={`p-2 rounded-lg transition-colors ${
+                      theme === 'dark' 
+                        ? 'text-white/60 hover:text-white hover:bg-white/10' 
+                        : 'text-[#6b7280] hover:text-[#2d2d2d] hover:bg-[#e8f5e8]'
+                    }`}
+                  >
+                    <XMarkIcon className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
               {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[380px]">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[28rem]">
                 {messages.map((message) => (
                   <motion.div
                     key={message.id}
@@ -187,7 +247,7 @@ export default function Chatbot() {
                           : 'bg-[#e8f5e8] text-[#2d2d2d]'
                       }`}
                     >
-                      <p className="text-sm leading-relaxed">{message.content}</p>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                       <p className={`text-xs mt-2 ${
                         message.role === 'user' 
                           ? 'text-white/70' 

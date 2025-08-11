@@ -52,7 +52,16 @@ export interface ChatMessage {
 }
 
 export interface ChatbotConfig {
-  model: 'openai' | 'groq' | 'ollama';
+  provider: 'openai' | 'groq' | 'ollama';
+  model?: string;
   apiKey?: string;
   baseUrl?: string;
+}
+
+export interface LLMProvider {
+  id: string;
+  name: string;
+  models: string[];
+  requiresApiKey: boolean;
+  description: string;
 } 
