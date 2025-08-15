@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Experience from '@/components/Experience';
+import BrandsClients from '@/components/BrandsClients';
 import Skills from '@/components/Skills';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
@@ -28,6 +29,7 @@ export default function Home() {
         <Hero personalInfo={portfolioData.personal_info} />
         <About personalInfo={portfolioData.personal_info} />
         <Experience experience={portfolioData.experience} />
+        <BrandsClients />
         <Skills skills={portfolioData.skills} />
         <Education education={portfolioData.education} />
         <Contact personalInfo={portfolioData.personal_info} />
