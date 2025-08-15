@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import Image from 'next/image';
 
 const brandsData = [
   {
@@ -97,6 +98,11 @@ export default function BrandsClients() {
       : { width: '90px', height: '90px', containerSize: 'w-24 h-24' };
   };
 
+  // Error handler for image loading
+  const handleImageError = (brandName: string) => {
+    console.warn(`Failed to load image for ${brandName}`);
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -172,16 +178,22 @@ export default function BrandsClients() {
               >
                 {/* Logo - Dynamic dimensions based on brand */}
                 <div className={`${logoSize.containerSize} flex items-center justify-center`}>
-                  <img
+                  <Image
                     src={brand.logo}
                     alt={brand.alt}
-                    className="max-w-full max-h-full object-contain transition-all duration-300 group-hover:brightness-110"
+                    width={parseInt(logoSize.width.replace('px', ''))}
+                    height={parseInt(logoSize.height.replace('px', ''))}
+                    className="transition-all duration-300 group-hover:brightness-110"
                     style={{
                       filter: theme === 'dark' ? 'brightness(0.9)' : 'brightness(1)',
-                      width: logoSize.width,
-                      height: logoSize.height,
+                      maxWidth: '100%',
+                      height: 'auto',
                       objectFit: 'contain'
                     }}
+                    priority={index < 8} // Prioritize loading first 8 logos
+                    onError={() => handleImageError(brand.name)}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkrHB0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyatinyPWkXTiTvjUKXKO3chlBCvRk39sN/d+BttPo7LI/xPXJrOKuCwbP3Rq7F+VxRYrbyMVSqOaLIW+xPhOv/2Q=="
                   />
                 </div>
 

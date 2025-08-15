@@ -19,7 +19,7 @@ export default function Chatbot() {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm Aman Mehrotra, and I'm excited to chat with you! I can share insights about my journey in data science and AI, my experiences across different companies, my technical skills, personal interests, and much more. What would you like to know about me?",
+      content: "Hi! I'm Aman Mehrotra 👋\n\nI'm excited to chat with you! Ask me about:\n• My AI/Data Science journey\n• Technical skills & experience\n• Personal interests & background\n\nWhat would you like to know?",
       timestamp: new Date()
     }
   ]);
@@ -88,6 +88,10 @@ export default function Chatbot() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       
       // Update provider info if available
@@ -98,10 +102,17 @@ export default function Chatbot() {
         });
       }
       
+      let responseContent = data.response || "I'm sorry, I couldn't generate a response at the moment.";
+      
+      // Ensure the response looks complete
+      if (responseContent && responseContent.length > 50 && !responseContent.match(/[.!?:]$/)) {
+        responseContent += "...";
+      }
+      
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response || "I'm sorry, I couldn't generate a response at the moment.",
+        content: responseContent,
         timestamp: new Date()
       };
       
@@ -111,7 +122,7 @@ export default function Chatbot() {
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "I'm experiencing some technical difficulties. Please try again in a moment.",
+        content: "I'm experiencing some technical difficulties. Here are some things you can ask me about:\n\n• My **career experience** and roles\n• **Technical skills** and expertise\n• **Education** and certifications\n• **Personal** interests and hobbies\n\nPlease try again in a moment!",
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -138,6 +149,28 @@ export default function Chatbot() {
 
   return (
     <>
+      {/* Chat with Me Label */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2, duration: 0.5 }}
+        className={`fixed bottom-24 right-4 px-3 py-2 rounded-lg shadow-lg z-40 ${
+          theme === 'dark'
+            ? 'bg-slate-800 text-white border border-slate-600'
+            : 'bg-white text-[#2d2d2d] border border-[#d2b48c] shadow-md'
+        }`}
+      >
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-medium">💬 Chat with Me</span>
+          <div className="w-2 h-2 rounded-full animate-pulse" 
+               style={{ backgroundColor: '#00FF00' }} />
+        </div>
+        {/* Arrow pointing to chat button */}
+        <div className={`absolute -bottom-2 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent ${
+          theme === 'dark' ? 'border-t-slate-800' : 'border-t-white'
+        }`} />
+      </motion.div>
+
       {/* Chat Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
@@ -180,9 +213,13 @@ export default function Chatbot() {
                     <ChatBubbleLeftRightIcon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className={`font-semibold ${
-                      theme === 'dark' ? 'text-white' : 'text-[#2d2d2d]'
-                    }`}>Chat with Aman</h3>
+                    <div className="flex items-center space-x-2">
+                      <h3 className={`font-semibold ${
+                        theme === 'dark' ? 'text-white' : 'text-[#2d2d2d]'
+                      }`}>Chat with Aman</h3>
+                      <div className="w-2 h-2 rounded-full animate-pulse" 
+                           style={{ backgroundColor: '#00FF00' }} />
+                    </div>
                     <p className={`text-xs ${
                       theme === 'dark' ? 'text-white/60' : 'text-[#6b7280]'
                     }`}>
@@ -271,10 +308,17 @@ export default function Chatbot() {
                     <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                       theme === 'dark' ? 'bg-white/10' : 'bg-[#e8f5e8]'
                     }`}>
-                      <div className="flex space-x-2">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                      <div className="flex items-center space-x-2">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
+                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                        </div>
+                        <span className={`text-xs ${
+                          theme === 'dark' ? 'text-white/60' : 'text-[#6b7280]'
+                        }`}>
+                          Aman is typing...
+                        </span>
                       </div>
                     </div>
                   </motion.div>

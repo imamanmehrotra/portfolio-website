@@ -39,7 +39,10 @@ export class OpenAIService implements LLMService {
             }
           ],
           temperature: 0.7,
-          max_tokens: 500
+          max_tokens: 800,
+          top_p: 0.9,
+          frequency_penalty: 0.1,
+          presence_penalty: 0.1
         }),
       });
 
@@ -86,7 +89,10 @@ export class GroqService implements LLMService {
             }
           ],
           temperature: 0.7,
-          max_tokens: 500
+          max_tokens: 800,
+          top_p: 0.9,
+          frequency_penalty: 0.1,
+          presence_penalty: 0.1
         }),
       });
 
@@ -125,7 +131,10 @@ export class OllamaService implements LLMService {
           stream: false,
           options: {
             temperature: 0.7,
-            num_predict: 500
+            num_predict: 800,
+            top_p: 0.9,
+            frequency_penalty: 0.1,
+            presence_penalty: 0.1
           }
         }),
       });

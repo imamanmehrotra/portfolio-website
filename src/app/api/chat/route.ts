@@ -29,11 +29,24 @@ export async function POST(request: NextRequest) {
       await chatbotService.initialize(config);
     }
 
-    // Generate response
-    const response = await chatbotService.generateResponse(message);
+    // Generate response with timeout
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Response timeout')), 30000); // 30 second timeout
+    });
+
+    const responsePromise = chatbotService.generateResponse(message);
+    
+    const response = await Promise.race([responsePromise, timeoutPromise]) as string;
+
+    // Ensure response is complete (not cut off)
+    let finalResponse = response;
+    if (response && !response.match(/[.!?]$/)) {
+      // If response doesn't end with proper punctuation, it might be incomplete
+      finalResponse = response + "...";
+    }
 
     return NextResponse.json({ 
-      response,
+      response: finalResponse,
       provider: config.provider,
       model: config.model
     });
@@ -41,7 +54,7 @@ export async function POST(request: NextRequest) {
     console.error('Chat API Error:', error);
     
     // Return a fallback response on error
-    const fallbackResponse = "I'm experiencing some technical difficulties right now. Please try asking me about my experience, skills, education, or personal background, and I'll do my best to help!";
+    const fallbackResponse = "I'm experiencing some technical difficulties. Please try asking me about:\n\n• My **experience** and career journey\n• **Technical skills** and expertise\n• **Education** and background\n• **Personal** interests\n\nWhat interests you most?";
     
     return NextResponse.json({ 
       response: fallbackResponse,
