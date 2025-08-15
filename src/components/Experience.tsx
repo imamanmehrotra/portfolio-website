@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { Experience as ExperienceType } from '@/types/portfolio';
-import { MapPinIcon, CalendarIcon, BuildingOfficeIcon } from '@heroicons/react/24/outline';
+import { MapPinIcon, BuildingOfficeIcon } from '@heroicons/react/24/outline';
 import { useTheme } from '../contexts/ThemeContext';
+import { useEffect, useState } from 'react';
 
 interface ExperienceProps {
   experience: ExperienceType[];
@@ -11,7 +12,31 @@ interface ExperienceProps {
 
 export default function Experience({ experience }: ExperienceProps) {
   const { theme } = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
   
+  // Fallback: Make content visible after a short delay if animations don't trigger
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000); // Show content after 1 second regardless of scroll position
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Function to get company domain expertise
+  const getCompanyDomains = (company: string) => {
+    const domainMap: { [key: string]: string } = {
+      'PepsiCo': 'CPG, Retail, Logistics, AI Adoption',
+      'State Street': 'Finance, FX',
+      'Microsoft': 'Insurance, Media, FMCG, Hospitality',
+      'Walmart Global Tech India': 'E-Com, Retail',
+      'Genpact': 'Healthcare, Salesforce Commercialisation',
+      'EXL': 'Healthcare, Payer, Insurance, Analytics',
+      'ZS Associates': 'Healthcare, Salesforce Optimization, PLD Analysis, Reporting',
+    };
+    return domainMap[company] || 'Various Domains';
+  };
+
   // Function to get company icon path
   const getCompanyIcon = (company: string) => {
     const iconMap: { [key: string]: string } = {
@@ -31,13 +56,14 @@ export default function Experience({ experience }: ExperienceProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.2, // Reduced from 0.3 to 0.2 for faster animation
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 }, // Reduced from y: 30 to y: 20 for subtler animation
     visible: { opacity: 1, y: 0 },
   };
 
@@ -46,8 +72,9 @@ export default function Experience({ experience }: ExperienceProps) {
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          whileInView="visible" 
+          animate={isVisible ? "visible" : "hidden"}
+          viewport={{ once: true, amount: 0.1, margin: "-100px" }}
           variants={containerVariants}
           className="text-center mb-16"
         >
@@ -80,7 +107,8 @@ export default function Experience({ experience }: ExperienceProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            animate={isVisible ? "visible" : "hidden"}
+            viewport={{ once: true, amount: 0.1, margin: "-50px" }}
             variants={containerVariants}
             className="space-y-12"
           >
@@ -90,27 +118,12 @@ export default function Experience({ experience }: ExperienceProps) {
                 variants={itemVariants}
                 className="relative flex items-start flex-row"
               >
-                {/* Timeline Dot with Company Icon */}
-                <div className={`absolute left-4 top-8 w-8 h-8 backdrop-blur-sm rounded-full border-4 z-10 p-1 flex items-center justify-center ${
+                {/* Timeline Dot - Solid Grey */}
+                <div className={`absolute left-4 top-8 w-8 h-8 backdrop-blur-sm rounded-full border-4 z-10 ${
                   theme === 'dark' 
-                    ? 'bg-white/10 border-slate-900' 
-                    : 'bg-[#faf8f0]/90 border-[#d2b48c]'
-                }`}>
-                  <img
-                    src={getCompanyIcon(exp.company)}
-                    alt={`${exp.company} logo`}
-                    className="w-full h-full object-contain rounded-full"
-                    onError={(e) => {
-                      // Fallback to gradient dot
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      if (theme === 'dark') {
-                        (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(135deg, rgb(168, 85, 247), rgb(59, 130, 246))';
-                      } else {
-                        (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(135deg, #8fbc8f, #d2b48c)';
-                      }
-                    }}
-                  />
-                </div>
+                    ? 'bg-gray-500/60 border-slate-900' 
+                    : 'bg-[#f5f5dc]/70 border-[#d2b48c]'
+                }`} />
 
                 {/* Content Card */}
                 <div className="flex-1 ml-16">
@@ -155,12 +168,6 @@ export default function Experience({ experience }: ExperienceProps) {
                         </div>
                       </div>
                       <div className="mt-4 sm:mt-0 text-right">
-                        <div className={`flex items-center justify-end space-x-2 mb-2 ${
-                          theme === 'dark' ? 'text-white/70' : 'text-[#6b7280]'
-                        }`}>
-                          <CalendarIcon className="w-4 h-4" />
-                          <span className="text-sm">{exp.duration}</span>
-                        </div>
                         <div className={`flex items-center justify-end space-x-2 ${
                           theme === 'dark' ? 'text-white/70' : 'text-[#6b7280]'
                         }`}>
@@ -207,7 +214,7 @@ export default function Experience({ experience }: ExperienceProps) {
                             ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border-purple-400/30'
                             : 'bg-gradient-to-r from-[#8fbc8f]/20 to-[#d2b48c]/20 text-[#8fbc8f] border-[#8fbc8f]/30'
                         }`}>
-                          {exp.company}
+                          {getCompanyDomains(exp.company)}
                         </span>
                       </div>
                     </div>

@@ -38,8 +38,8 @@ export class OpenAIService implements LLMService {
               content: userMessage
             }
           ],
-          temperature: 0.5,
-          max_tokens: 300
+          temperature: 0.7,
+          max_tokens: 500
         }),
       });
 
@@ -85,8 +85,8 @@ export class GroqService implements LLMService {
               content: userMessage
             }
           ],
-          temperature: 0.5,
-          max_tokens: 300
+          temperature: 0.7,
+          max_tokens: 500
         }),
       });
 
@@ -124,8 +124,8 @@ export class OllamaService implements LLMService {
           prompt: `${prompt}\n\nUser: ${userMessage}\nAssistant:`,
           stream: false,
           options: {
-            temperature: 0.5,
-            num_predict: 300
+            temperature: 0.7,
+            num_predict: 500
           }
         }),
       });

@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aman Mehrotra - Senior Manager Data Science | GenAI | Azure 2X Certified",
+  title: "TechMonk",
   description: "Portfolio of Aman Mehrotra, a seasoned Data Scientist and AI Engineer leading AI initiatives at PepsiCo. Expert in AI adoption strategy, generative AI solution architecture, and end-to-end development of intelligent applications.",
   keywords: ["Data Science", "AI Engineer", "Machine Learning", "GenAI", "Azure", "PepsiCo", "Portfolio"],
   authors: [{ name: "Aman Mehrotra" }],
   creator: "Aman Mehrotra",
   openGraph: {
-    title: "Aman Mehrotra - Senior Manager Data Science | GenAI",
+    title: "TechMonk",
     description: "Portfolio of Aman Mehrotra, a seasoned Data Scientist and AI Engineer leading AI initiatives at PepsiCo.",
     type: "website",
     locale: "en_US",
