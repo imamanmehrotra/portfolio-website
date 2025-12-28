@@ -4,85 +4,87 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import Image from 'next/image';
 
+const CDN_BASE = 'https://scfzig30xveewmt3.public.blob.vercel-storage.com/portfolio_icons';
+
 const brandsData = [
   {
     name: 'PepsiCo',
-    logo: '/PepsiCo_Icon.png',
+    logo: `${CDN_BASE}/PepsiCo_Icon.png`,
     alt: 'PepsiCo Logo'
   },
   {
     name: 'State Street',
-    logo: '/State-street_icon.svg',
+    logo: `${CDN_BASE}/State-street_icon.svg`,
     alt: 'State Street Logo'
   },
   {
     name: 'Microsoft',
-    logo: '/Microsoft_icon.png',
+    logo: `${CDN_BASE}/Microsoft_icon.png`,
     alt: 'Microsoft Logo'
   },
   {
     name: 'Walmart',
-    logo: '/Walmart_Icon.png',
+    logo: `${CDN_BASE}/Walmart_Icon.png`,
     alt: 'Walmart Logo'
   },
   {
     name: 'Genpact',
-    logo: '/Genpact_Icon.png',
+    logo: `${CDN_BASE}/Genpact_Icon.png`,
     alt: 'Genpact Logo'
   },
   {
     name: 'EXL Service',
-    logo: '/EXL_Service_icon.png',
+    logo: `${CDN_BASE}/EXL_Service_icon.png`,
     alt: 'EXL Service Logo'
   },
   {
     name: 'ZS Associates',
-    logo: '/ZS_Associates_icon.png',
+    logo: `${CDN_BASE}/ZS_Associates_icon.png`,
     alt: 'ZS Associates Logo'
   },
   {
     name: 'Pfizer',
-    logo: '/Pfizer.png',
+    logo: `${CDN_BASE}/Pfizer.png`,
     alt: 'Pfizer Logo'
   },
   {
     name: 'Takeda',
-    logo: '/Takeda.png',
+    logo: `${CDN_BASE}/Takeda.png`,
     alt: 'Takeda Logo'
   },
   {
     name: 'Astellas',
-    logo: '/Astellas.png',
+    logo: `${CDN_BASE}/Astellas.png`,
     alt: 'Astellas Logo'
   },
   {
     name: 'Alcon',
-    logo: '/Alcon.png',
+    logo: `${CDN_BASE}/Alcon.png`,
     alt: 'Alcon Logo'
   },
   {
     name: 'Breville',
-    logo: '/Breville_logo.png',
+    logo: `${CDN_BASE}/Breville_logo.png`,
     alt: 'Breville Logo'
   },
   {
     name: 'Isuzu',
-    logo: '/Isuzu.png',
+    logo: `${CDN_BASE}/Isuzu.png`,
     alt: 'Isuzu Logo'
   },
   {
     name: 'BSWH',
-    logo: '/bswh.png',
+    logo: `${CDN_BASE}/bswh.png`,
     alt: 'BSWH Logo'
   },
   {
     name: 'Greenstone',
-    logo: '/Greenstone.webp',
+    logo: `${CDN_BASE}/Greenstone.webp`,
     alt: 'Greenstone Logo'
   },
   {
     name: 'TV360',
-    logo: '/TV360.webp',
+    logo: `${CDN_BASE}/TV360.webp`,
     alt: 'TV360 Logo'
   }
 ];
